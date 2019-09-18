@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Server>
+	<Port name="HTTP/1.1" protocol="HTTP">8435</Port>
+<PathMapping local="/Homework" module="Homework" remote="/Users/macadmin/Desktop/GitHub/CS174/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/htdocs/Homework"/></Server>
