@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Server>
-	<Port name="HTTP/1.1" protocol="HTTP">8435</Port>
-<PathMapping local="/Homework" module="Homework" remote="/Users/macadmin/Desktop/GitHub/CS174/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/htdocs/Homework"/></Server>
+	<Port name="HTTP/1.1" protocol="HTTP">8430</Port>
+<PathMapping local="/Midterm#1" module="Midterm#1" remote="/Users/macadmin/Desktop/GitHub/CS174/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/htdocs/Midterm#1"/><PathMapping local="/Midterm1" module="Midterm1" remote="/Users/macadmin/Desktop/GitHub/CS174/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/htdocs/Midterm1"/><PathMapping local="/Homework" module="Homework" remote="/Users/macadmin/Desktop/GitHub/CS174/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/htdocs/Homework"/></Server>
