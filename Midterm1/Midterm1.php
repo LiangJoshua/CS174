@@ -48,6 +48,9 @@ echo "</body></html>";
 
 function maxProductOfFour($string)
 {
+    define("ROW_LENGTH", 20);
+    define("COL_LENGTH", 20);
+    define("ADJACENT_NUMBERS_LENGTH", 4);
     $filtered_string = str_replace(array(
         "\n",
         "\r"
@@ -57,8 +60,8 @@ function maxProductOfFour($string)
     }
     $numbers = array();
     $filtered_string_index = 0;
-    for ($row = 0; $row < 20; $row ++) {
-        for ($col = 0; $col < 20; $col ++) {
+    for ($row = 0; $row < ROW_LENGTH; $row ++) {
+        for ($col = 0; $col < COL_LENGTH; $col ++) {
             $numbers[$row][$col] = $filtered_string[$filtered_string_index];
             $filtered_string_index ++;
         }
@@ -70,9 +73,9 @@ function maxProductOfFour($string)
     $max_product = 1;
 
     // checks horizontally
-    for ($row = 0; $row < 20; $row ++) {
-        for ($col = 0; $col < 16; $col ++) {
-            for ($i = $col; $i < $col + 4; $i ++) {
+    for ($row = 0; $row < ROW_LENGTH; $row ++) {
+        for ($col = 0; $col < COL_LENGTH - ADJACENT_NUMBERS_LENGTH; $col ++) {
+            for ($i = $col; $i < $col + ADJACENT_NUMBERS_LENGTH; $i ++) {
                 if (! ctype_digit($numbers[$row][$i])) {
                     $max_product = "ERROR: File cannot contain non-numbers";
                     $max_adjacent_numbers = "ERROR: File cannot contain non-numbers";
@@ -95,9 +98,9 @@ function maxProductOfFour($string)
     }
 
     // checks vertically
-    for ($col = 0; $col < 20; $col ++) {
-        for ($row = 0; $row < 16; $row ++) {
-            for ($i = $row; $i < $row + 4; $i ++) {
+    for ($col = 0; $col < ROW_LENGTH; $col ++) {
+        for ($row = 0; $row < COL_LENGTH - ADJACENT_NUMBERS_LENGTH; $row ++) {
+            for ($i = $row; $i < $row + ADJACENT_NUMBERS_LENGTH; $i ++) {
                 if (! ctype_digit($numbers[$i][$col])) {
                     $max_product = "ERROR: File cannot contain non-numbers";
                     $max_adjacent_numbers = "ERROR: File cannot contain non-numbers";
@@ -120,15 +123,15 @@ function maxProductOfFour($string)
     }
 
     // checks diagonally down-right and up-left
-    for ($row = 0; $row < 17; $row ++) { // iterates each row from top to bottom
-        for ($col = 16; $col >= 0; $col --) { // iterates each column from right to left
+    for ($row = 0; $row <= ROW_LENGTH; $row ++) { // iterates each row from top to bottom
+        for ($col = COL_LENGTH - ADJACENT_NUMBERS_LENGTH; $col >= 0; $col --) { // iterates each column from right to left
             $diagonal_row = $row;
-            for ($diagonal_col = $col; $diagonal_col < 17; $diagonal_col ++) { // iterates the diagonal
+            for ($diagonal_col = $col; $diagonal_col <= COL_LENGTH; $diagonal_col ++) { // iterates the diagonal
                 $diagonal_index = 0;
-                if (intval($numbers[$diagonal_row + 3][$diagonal_col + 3]) == null) { // checks for null pointer across diagonal
+                if (intval($numbers[$diagonal_row + (ADJACENT_NUMBERS_LENGTH - 1)][$diagonal_col + (ADJACENT_NUMBERS_LENGTH - 1)]) == null) { // checks for null pointer across diagonal
                     break;
                 }
-                for ($j = $diagonal_col; $j < $diagonal_col + 4; $j ++) {
+                for ($j = $diagonal_col; $j < $diagonal_col + ADJACENT_NUMBERS_LENGTH; $j ++) {
                     if (! ctype_digit($numbers[$diagonal_row + $diagonal_index][$j])) {
                         $max_product = "ERROR: File cannot contain non-numbers";
                         $max_adjacent_numbers = "ERROR: File cannot contain non-numbers";
@@ -155,15 +158,17 @@ function maxProductOfFour($string)
     }
 
     // checks diagonally up-right and down-left
-    for ($row = 19; $row > 2; $row --) { // iterates each row from bottom to top
-        for ($col = 16; $col >= 0; $col --) { // iterates each column from right to left
+    define("LAST_ROW_INDEX", 19);
+    define("FOURTH_ROW_INDEX", 3);
+    for ($row = LAST_ROW_INDEX; $row >= FOURTH_ROW_INDEX; $row --) { // iterates each row from bottom to top
+        for ($col = COL_LENGTH - ADJACENT_NUMBERS_LENGTH; $col >= 0; $col --) { // iterates each column from right to left
             $diagonal_row = $row;
-            for ($diagonal_col = $col; $diagonal_col < 17; $diagonal_col ++) { // iterates the diagonal
+            for ($diagonal_col = $col; $diagonal_col < COL_LENGTH - ADJACENT_NUMBERS_LENGTH; $diagonal_col ++) { // iterates the diagonal
                 $diagonal_index = 0;
-                if (intval($numbers[$diagonal_row - 3][$diagonal_col + 3]) == null) { // checks for null pointer across diagonal
+                if (intval($numbers[$diagonal_row - (ADJACENT_NUMBERS_LENGTH - 1)][$diagonal_col + (ADJACENT_NUMBERS_LENGTH - 1)]) == null) { // checks for null pointer across diagonal (current index + 3)
                     break;
                 }
-                for ($j = $diagonal_col; $j < $diagonal_col + 4; $j ++) {
+                for ($j = $diagonal_col; $j < $diagonal_col + ADJACENT_NUMBERS_LENGTH; $j ++) {
                     if (! ctype_digit($numbers[$diagonal_row - $diagonal_index][$j])) {
                         $max_product = "ERROR: File cannot contain non-numbers";
                         $max_adjacent_numbers = "ERROR: File cannot contain non-numbers";
@@ -181,12 +186,6 @@ function maxProductOfFour($string)
                     $max_product = $product;
                     $max_adjacent_numbers = $adjacent_numbers;
                 }
-                // echo ("row: $row<br>");
-                // echo ("col: $col<br>");
-                // echo ("$adjacent_numbers<br>");
-                // echo ("$product<br>");
-                // echo ("$max_product<br>");
-                // echo ("$max_adjacent_numbers<br><br>");
                 $adjacent_numbers = "";
                 $product = 1;
                 $diagonal_row --;
