@@ -1,0 +1,29 @@
+CREATE TABLE video (
+camera_id INT UNSIGNED NOT NULL,
+timestamp TIMESTAMP NOT NULL,
+video_content VARCHAR(255) NOT NULL,
+thumbnail VARCHAR(255) NOT NULL,
+hash BINARY(32) NOT NULL,
+PRIMARY KEY (hash)
+);
+
+
+CREATE TABLE images (
+hash BINARY(32) NOT NULL,
+image_content VARCHAR(255) NOT NULL,
+timeStamp TIMESTAMP NOT NULL,
+FOREIGN KEY(hash) REFERENCES video(hash)
+);
+
+
+// I used VARCHAR(255) for the file paths of video_content, image_content, 
+// and thumbnail since the string for these file paths could be very long and
+// are unknown. The file paths could be very deep in subdirectories and
+// I used 255 for VARCHAR because it's the largest number of characters that 
+// are counted with an 8-bit number so it maximizes the use of the 8-bit 
+// count. 255 characters is also the the maximum length of VARCHAR in many 
+// databases. Worst case scenario, if the file path for the any of the 
+// contents are longer than 255 characters, then an error/warning will be 
+// generated if MySQL is running in strict mode. 
+
+

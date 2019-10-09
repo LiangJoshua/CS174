@@ -1,0 +1,22 @@
+
+
+CREATE TABLE video (
+camera_id INT UNSIGNED NOT NULL,
+timestamp TIMESTAMP NOT NULL,
+video_content VARCHAR(255) NOT NULL,
+thumbnail VARCHAR(255) NOT NULL,
+hash BINARY(32) NOT NULL,
+PRIMARY KEY (hash)
+);
+
+CREATE TABLE images (
+hash BINARY(32) NOT NULL,
+image_content VARCHAR(255) NOT NULL,
+timeStamp TIMESTAMP NOT NULL,
+FOREIGN KEY(hash) REFERENCES video(hash)
+);
+
+insert into video(camera_id, video_content, thumbnail, hash) values(1, "/Users/macadmin/Downloads/174.zip", "/Users/macadmin/Downloads/174.zip", "c81e728d9d4c2f636f067f89cc14862c");
+insert into images(hash, image_content) values("c81e728d9d4c2f636f067f89cc14862c", "/Users/macadmin/Downloads/174.zip");
+select * from video;
+select * from images;
